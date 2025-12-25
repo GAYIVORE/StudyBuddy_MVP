@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: student-ai-mentor
+    env: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: PORT
+        value: 8000
+      - key: HOST
+        value: 0.0.0.0
+    plan: free
+    autoDeploy: true
