@@ -1,0 +1,17 @@
+
+Physics Fundamentals
+
+Newton's Laws of Motion:
+1. An object at rest stays at rest, and an object in motion stays in motion unless acted upon by an external force.
+2. The acceleration of an object is directly proportional to the net force acting on it and inversely proportional to its mass (F = ma).
+3. For every action, there is an equal and opposite reaction.
+
+Thermodynamics:
+- First Law: Energy cannot be created or destroyed, only transferred or converted.
+- Second Law: The entropy of an isolated system always increases over time.
+- Third Law: As temperature approaches absolute zero, the entropy of a system approaches a constant minimum.
+
+Quantum Mechanics:
+- Wave-particle duality: Particles exhibit both wave-like and particle-like properties.
+- Heisenberg Uncertainty Principle: It is impossible to simultaneously know the exact position and momentum of a particle.
+- Schrödinger Equation: Describes how the quantum state of a physical system changes over time.

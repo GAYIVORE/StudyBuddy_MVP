@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyBuddy AI | Your Intelligent Learning Companion</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-container">
+                    <div class="logo-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>StudyBuddy<span class="ai-text">AI</span></h1>
+                        <p class="tagline">Your Intelligent Learning Companion</p>
+                    </div>
+                    <span class="beta-badge">BETA</span>
+                </div>
+                
+                <div class="header-stats">
+                    <div class="stat">
+                        <i class="fas fa-brain"></i>
+                        <span>Gemini 2.5</span>
+                    </div>
+                    <div class="stat" id="message-count">
+                        <i class="fas fa-comment"></i>
+                        <span>0 messages</span>
+                    </div>
+                    <div class="stat" id="api-status">
+                        <i class="fas fa-circle"></i>
+                        <span>Connecting...</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Study Mode Selection -->
+                <div class="sidebar-section">
+                    <div class="section-header">
+                        <i class="fas fa-sliders-h"></i>
+                        <h3>Study Mode</h3>
+                    </div>
+                    <div class="mode-grid">
+                        <div class="mode-card active" data-mode="general" id="mode-general">
+                            <div class="mode-icon">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="mode-info">
+                                <h4>General Tutor</h4>
+                                <p>General learning assistance</p>
+                            </div>
+                            <div class="mode-badge active-badge">
+                                <i class="fas fa-check"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="mode-card" data-mode="study" id="mode-study">
+                            <div class="mode-icon">
+                                <i class="fas fa-book-open"></i>
+                            </div>
+                            <div class="mode-info">
+                                <h4>Study Assistant</h4>
+                                <p>Homework & concepts</p>
+                            </div>
+                            <div class="mode-badge">
+                                <i class="fas fa-book"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="mode-card" data-mode="research" id="mode-research">
+                            <div class="mode-icon">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <div class="mode-info">
+                                <h4>Research Aid</h4>
+                                <p>Papers & citations</p>
+                            </div>
+                            <div class="mode-badge">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Knowledge Base -->
+                <div class="sidebar-section">
+                    <div class="section-header">
+                        <i class="fas fa-database"></i>
+                        <h3>Knowledge Base</h3>
+                    </div>
+                    
+                    <div class="upload-area" id="upload-area">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Drop PDF/TXT files here</p>
+                        <span class="upload-hint">or click to browse</span>
+                        <input type="file" id="file-upload" accept=".pdf,.txt,.md" multiple>
+                    </div>
+                    
+                    <div class="file-list" id="file-list">
+                        <div class="empty-state">
+                            <i class="fas fa-file-import"></i>
+                            <p>No documents uploaded</p>
+                        </div>
+                    </div>
+                    
+                    <div class="kb-actions">
+                        <button class="btn btn-secondary" id="clear-kb">
+                            <i class="fas fa-trash-alt"></i>
+                            Clear All
+                        </button>
+                        <button class="btn btn-primary" id="rag-toggle">
+                            <i class="fas fa-brain"></i>
+                            <span>RAG: ON</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="sidebar-section">
+                    <div class="section-header">
+                        <i class="fas fa-bolt"></i>
+                        <h3>Quick Actions</h3>
+                    </div>
+                    <div class="quick-actions">
+                        <button class="action-btn" data-action="explain">
+                            <i class="fas fa-lightbulb"></i>
+                            Explain Concept
+                        </button>
+                        <button class="action-btn" data-action="example">
+                            <i class="fas fa-code"></i>
+                            Get Example
+                        </button>
+                        <button class="action-btn" data-action="quiz">
+                            <i class="fas fa-question-circle"></i>
+                            Create Quiz
+                        </button>
+                        <button class="action-btn" data-action="summary">
+                            <i class="fas fa-file-contract"></i>
+                            Summarize
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Area -->
+            <div class="chat-area">
+                <!-- Chat Header -->
+                <div class="chat-header">
+                    <div class="chat-info">
+                        <div class="active-mode" id="active-mode">
+                            <i class="fas fa-robot"></i>
+                            <span>General Tutor Mode</span>
+                        </div>
+                        <div class="rag-status" id="rag-status">
+                            <i class="fas fa-brain"></i>
+                            <span>Knowledge Base Active</span>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-actions">
+                        <button class="icon-btn" id="export-chat" title="Export Conversation">
+                            <i class="fas fa-download"></i>
+                        </button>
+                        <button class="icon-btn" id="clear-chat" title="Clear Chat">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                        <button class="icon-btn" id="settings-btn" title="Settings">
+                            <i class="fas fa-cog"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Messages Container -->
+                <div class="messages-container" id="messages-container">
+                    <!-- Welcome Message -->
+                    <div class="message ai-message welcome-message">
+                        <div class="message-avatar">
+                            <div class="avatar-icon ai-avatar">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                        </div>
+                        <div class="message-content">
+                            <div class="message-header">
+                                <span class="sender">StudyBuddy AI</span>
+                                <span class="message-time">Just now</span>
+                            </div>
+                            <div class="message-body">
+                                <h3>👋 Welcome to StudyBuddy AI!</h3>
+                                <p>I'm your intelligent learning companion, powered by Google Gemini. I'm here to help you learn better, not just give answers.</p>
+                                
+                                <div class="features-grid">
+                                    <div class="feature">
+                                        <i class="fas fa-comments"></i>
+                                        <h4>Interactive Learning</h4>
+                                        <p>Ask questions, get explanations</p>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-book"></i>
+                                        <h4>Smart Tutoring</h4>
+                                        <p>Step-by-step guidance</p>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-database"></i>
+                                        <h4>Knowledge Base</h4>
+                                        <p>Upload your materials</p>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-search"></i>
+                                        <h4>Research Aid</h4>
+                                        <p>Academic writing help</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="welcome-tips">
+                                    <h4>🎯 Getting Started:</h4>
+                                    <ul>
+                                        <li>Select a study mode from the sidebar</li>
+                                        <li>Upload your textbooks or notes</li>
+                                        <li>Ask specific questions for best results</li>
+                                        <li>Use Quick Actions for instant help</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="quick-prompts">
+                                    <h4>💡 Try asking:</h4>
+                                    <div class="prompt-chips">
+                                        <button class="prompt-chip" data-prompt="Explain quantum physics in simple terms">Explain quantum physics</button>
+                                        <button class="prompt-chip" data-prompt="Help me understand photosynthesis step by step">Photosynthesis help</button>
+                                        <button class="prompt-chip" data-prompt="How to write a literature review for a research paper?">Literature review guide</button>
+                                        <button class="prompt-chip" data-prompt="What's the difference between machine learning and AI?">ML vs AI</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input Area -->
+                <div class="input-area">
+                    <div class="typing-indicator" id="typing-indicator">
+                        <div class="typing-dots">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                        <span>StudyBuddy is thinking...</span>
+                    </div>
+                    
+                    <div class="input-wrapper">
+                        <div class="input-controls">
+                            <button class="input-icon-btn" id="attach-file" title="Attach File">
+                                <i class="fas fa-paperclip"></i>
+                            </button>
+                            <button class="input-icon-btn" id="voice-input" title="Voice Input">
+                                <i class="fas fa-microphone"></i>
+                            </button>
+                        </div>
+                        
+                        <textarea 
+                            id="message-input" 
+                            placeholder="Ask me anything about your studies... (Press Ctrl+Enter to send)"
+                            rows="1"
+                            autofocus
+                        ></textarea>
+                        
+                        <div class="input-actions">
+                            <div class="character-count">
+                                <span id="char-count">0</span>/2000
+                            </div>
+                            <button class="send-btn" id="send-btn">
+                                <i class="fas fa-paper-plane"></i>
+                                <span>Send</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="input-footer">
+                        <div class="suggestions">
+                            <span class="suggestions-label">Quick suggestions:</span>
+                            <div class="suggestion-chips">
+                                <button class="suggestion-chip" data-suggestion="Help me study for my physics exam">Physics exam prep</button>
+                                <button class="suggestion-chip" data-suggestion="Explain calculus derivatives">Derivatives help</button>
+                                <button class="suggestion-chip" data-suggestion="How to write an abstract for a research paper?">Abstract writing</button>
+                                <button class="suggestion-chip" data-suggestion="Create a study schedule for finals">Study schedule</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal-overlay" id="settings-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2><i class="fas fa-cog"></i> Settings</h2>
+                <button class="modal-close" id="close-settings">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-group">
+                    <h3>API Configuration</h3>
+                    <div class="setting-item">
+                        <label for="api-url">API Base URL</label>
+                        <input type="text" id="api-url" value="http://localhost:8000" placeholder="Enter backend API URL">
+                    </div>
+                    <div class="setting-item">
+                        <label for="model-select">AI Model</label>
+                        <select id="model-select">
+                            <option value="gemini-2.5-flash-lite">Gemini 2.5 Flash Lite (Recommended)</option>
+                            <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
+                            <option value="gemini-2.5-pro">Gemini 2.5 Pro</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="settings-group">
+                    <h3>Chat Settings</h3>
+                    <div class="setting-item">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="auto-scroll" checked>
+                            <span>Auto-scroll to new messages</span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="sound-effects" checked>
+                            <span>Enable sound effects</span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="markdown-rendering" checked>
+                            <span>Render markdown formatting</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="settings-group">
+                    <h3>Appearance</h3>
+                    <div class="setting-item">
+                        <label for="theme-select">Theme</label>
+                        <select id="theme-select">
+                            <option value="light">Light Theme</option>
+                            <option value="dark">Dark Theme</option>
+                            <option value="auto">Auto (System)</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label for="font-size">Font Size</label>
+                        <select id="font-size">
+                            <option value="small">Small</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="large">Large</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="reset-settings">Reset to Defaults</button>
+                <button class="btn btn-primary" id="save-settings">Save Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast-container"></div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="global-loading">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p class="loading-text">Initializing StudyBuddy...</p>
+        </div>
+    </div>
+
+    <!-- Audio Elements for Sounds -->
+    <audio id="message-sent-sound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-message-pop-alert-2354.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="message-received-sound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="app.js"></script>
+</body>
+</html>
